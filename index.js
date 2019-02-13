@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const sax = require('sax')
 const json2xml = require('jsontoxml')
