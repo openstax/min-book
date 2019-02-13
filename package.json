@@ -4,7 +4,6 @@
   "description": "Get the unique nesting patterns in an XML file",
   "main": "index.js",
   "dependencies": {
-    "css-coverage": "^1.2.1",
     "jsontoxml": "^1.0.1",
     "sax": "^1.2.4"
   },
