@@ -143,5 +143,5 @@ const blankXmlParser = sax.parser(strict)
 const xmlParser = Object.assign(blankXmlParser, parserCallbacks)
 xmlParser.write(fileContents).close();
 
-const outputXml = json2xml(minJson)
+const outputXml = json2xml(minJson, {escape: true})
 fs.writeFileSync(outputPath, outputXml)
