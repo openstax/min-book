@@ -11,11 +11,6 @@ if (!filePath) {
   process.exit(111)
 }
 
-if (!outputPath) {
-  console.error('Second argument must be the path to an output (X)HTML file')
-  process.exit(111)
-}
-
 const fileContents = fs.readFileSync(filePath)
 
 const ignoreAttr = [
@@ -80,7 +75,7 @@ function addStackJson(value) {
 }
 
 const onError = (error) => {
-  console.log(`Error: ${error}`)
+  console.error(`Error: ${error}`)
 }
 
 const onText = (text) => {
@@ -144,4 +139,9 @@ const xmlParser = Object.assign(blankXmlParser, parserCallbacks)
 xmlParser.write(fileContents).close();
 
 const outputXml = json2xml(minJson, {escape: true})
-fs.writeFileSync(outputPath, outputXml)
+
+if (outputPath && outputPath !== '-') {
+  fs.writeFileSync(outputPath, outputXml)
+} else {
+  process.stdout.write(outputXml)
+}
