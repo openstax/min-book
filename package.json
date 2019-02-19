@@ -3,13 +3,16 @@
   "version": "0.0.0",
   "description": "Get the unique nesting patterns in an XML file",
   "main": "index.js",
+  "bin": {
+    "min-snippet": "index.js"
+  },
   "dependencies": {
     "jsontoxml": "^1.0.1",
     "sax": "^1.2.4"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./index.js ./example/example.xhtml ./example/out.xhtml"
   },
   "author": "",
   "license": "ISC"

@@ -1,7 +1,15 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const sax = require('sax')
 const json2xml = require('jsontoxml')
 const filePath = process.argv[2]
+const outputPath = process.argv[3]
+
+if (!filePath) {
+  console.error('First argument must be the path to an (X)HTML file')
+  process.exit(111)
+}
 
 const fileContents = fs.readFileSync(filePath)
 
@@ -14,7 +22,9 @@ const ignoreAttr = [
   'data-value',
   'width',
   'start',
-  'colspan'
+  'colspan',
+  'alt',
+  'data-alt'
 ]
 
 const ignoreInternal = [
@@ -65,7 +75,7 @@ function addStackJson(value) {
 }
 
 const onError = (error) => {
-  console.log(`Error: ${error}`)
+  console.error(`Error: ${error}`)
 }
 
 const onText = (text) => {
@@ -128,5 +138,10 @@ const blankXmlParser = sax.parser(strict)
 const xmlParser = Object.assign(blankXmlParser, parserCallbacks)
 xmlParser.write(fileContents).close();
 
-const outputXml = json2xml(minJson)
-fs.writeFileSync("out.xhtml", outputXml)
+const outputXml = json2xml(minJson, {escape: true})
+
+if (outputPath && outputPath !== '-') {
+  fs.writeFileSync(outputPath, outputXml)
+} else {
+  process.stdout.write(outputXml)
+}
